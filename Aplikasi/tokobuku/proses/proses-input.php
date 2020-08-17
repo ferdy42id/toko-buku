@@ -54,12 +54,12 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 4) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new Pasok;
-            $Pasok->setIdDistributor($_POST['idDistributor']);
-            $Pasok->setIdBuku($_POST['idBuku']);
-            $Pasok->setJumlah($_POST['jumlah']);
-            $Pasok->setTglMasuk($_POST['tglMasuk']);
-            $Pasok->input();
+            $Pasok = new \APP\Pasok();
+            $Pasok->idDistributor = $_POST['idDistributor'];
+            $Pasok->idBuku = $_POST['idBuku'];
+            $Pasok->jumlah = $_POST['jumlah'];
+            $Pasok->tglMasuk = $_POST['tglMasuk'];
+            $Pasok->insert();
         } else {
             header('location:index.php');
         }
@@ -68,8 +68,8 @@ if (isset($_POST['type'])) {
         include "Penjualan.php";
         $Penjualan = new Penjualan;
         $Penjualan->setIdKasir($_POST['idKasir']);
-        $Penjualan->setJumlah($_POST['jumlah']);
-        $Penjualan->setIdBuku($_POST['idBuku']);
+        $Penjualan->jumlah = $_POST['jumlah'];
+        $Penjualan->idBuku = $_POST['idBuku'];
         $Penjualan->tambahCart();
     } elseif ($_POST['type'] == 6) {
         include "Buku.php";

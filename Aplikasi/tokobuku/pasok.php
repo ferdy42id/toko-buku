@@ -107,7 +107,7 @@ if($level != 'admin'){
 					if(isset($_GET['action'])){
 						if($_GET['action'] == 'input'){
 							include "proses/Pasok.php";
-							$Pasok = new Pasok;
+							$Pasok = new \APP\Pasok();
 							echo	"
 							<h1>Input Pasok</h1>
 							<hr>
@@ -143,7 +143,7 @@ if($level != 'admin'){
 								header('location:pasok.php');
 							}else{
 								include "proses/Pasok.php";
-								$Pasok = new Pasok;
+								$Pasok = new \APP\Pasok();
 								$Pasok->data($_GET['id']);
 								echo	"
 								<h1>Edit Pasok</h1>
@@ -152,22 +152,22 @@ if($level != 'admin'){
 								<div class=\"form-group\">
 								<label>Distributor</label>
 								<select name=\"idDistributor\">
-								"; $Pasok->tampilDis($Pasok->getIdDistributor()); echo"
+								"; $Pasok->tampilDis($Pasok->idDistributor); echo"
 								</select>
 								</div>
 								<div class=\"form-group\">
 								<label>Buku</label>
 								<select name=\"idBuku\">
-								"; $Pasok->tampilBuk($Pasok->getIdBuku()); echo"
+								"; $Pasok->tampilBuk($Pasok->idBuku); echo"
 								</select>
 								</div>
 								<div class=\"form-group\">
 								<label>Jumlah</label>
-								<input type=\"text\" name=\"jumlah\" value=\"".$Pasok->getJumlah()."\" required>
+								<input type=\"text\" name=\"jumlah\" value=\"".$Pasok->jumlah."\" required>
 								</div>
 								<div class=\"form-group\">
 								<label>Tanggal Masuk</label>
-								<input type=\"text\" name=\"tglMasuk\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' value=\"".$Pasok->getTglMasuk()."\" required>
+								<input type=\"text\" name=\"tglMasuk\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' value=\"".$Pasok->tglMasuk."\" required>
 								</div>
 								<div class=\"form-group\">
 								<input type=\"submit\" name=\"submit\">
@@ -180,7 +180,7 @@ if($level != 'admin'){
 								header('location:pasok.php');
 							}else{
 								include "proses/Pasok.php";
-								$Pasok = new Pasok;
+								$Pasok = new \APP\Pasok();
 								$Pasok->data($_GET['id']);
 								echo	"
 								<h1>Tambah Pasok</h1>
@@ -189,18 +189,18 @@ if($level != 'admin'){
 								<div class=\"form-group\">
 								<label>Distributor</label>
 								<select name=\"idDistributor\">
-								"; echo $Pasok->tampilDisSelected($Pasok->getIdDistributor()); echo"
+								"; echo $Pasok->tampilDisSelected($Pasok->idDistributor); echo"
 								</select>
 								</div>
 								<div class=\"form-group\">
 								<label>Buku</label>
 								<select name=\"idBuku\">
-								"; echo $Pasok->tampilBukSelected($Pasok->getIdBuku()); echo"
+								"; echo $Pasok->tampilBukSelected($Pasok->idBuku); echo"
 								</select>
 								</div>
 								<div class=\"form-group\">
 								<label>Jumlah Sebelumnya</label>
-								".$Pasok->getJumlah()."
+								".$Pasok->jumlah."
 								</div>
 								<div class=\"form-group\">
 								<label>Jumlah</label>
@@ -221,7 +221,7 @@ if($level != 'admin'){
 								header('location:pasok.php');
 							}else{
 								include "proses/Pasok.php";
-								$Pasok = new Pasok;
+								$Pasok = new \APP\Pasok();
 								$Pasok->data($_GET['id']);
 								echo	"
 								<h1>Tambah Stok</h1>
@@ -230,18 +230,18 @@ if($level != 'admin'){
 								<div class=\"form-group\">
 								<label>Distributor</label>
 								<select name=\"idDistributor\">
-								"; echo $Pasok->tampilDisSelected($Pasok->getIdDistributor()); echo"
+								"; echo $Pasok->tampilDisSelected($Pasok->idDistributor); echo"
 								</select>
 								</div>
 								<div class=\"form-group\">
 								<label>Buku</label>
 								<select name=\"idBuku\">
-								"; $Pasok->tampilBukSelected($Pasok->getIdBuku()); echo"
+								"; $Pasok->tampilBukSelected($Pasok->idBuku); echo"
 								</select>
 								</div>
 								<div class=\"form-group\">
 								<label>Pasok</label>
-								".$Pasok->getJumlah()."
+								".$Pasok->jumlah."
 								<label>Stok</label>
 								<input type=\"text\" name=\"jumlah\" required>
 								</div>
@@ -258,7 +258,7 @@ if($level != 'admin'){
 						}
 					}else{
 						include "proses/Pasok.php";
-						$Pasok = new Pasok;
+						$Pasok = new \APP\Pasok();
 						echo	"
 						<h1>Pasok</h1>
 						<hr>
@@ -275,7 +275,7 @@ if($level != 'admin'){
 						</tr>
 						</thead>
 						<tbody>";
-						echo		$Pasok->tampil();
+						echo		$Pasok->select();
 						echo				"</tbody>
 						</table>";
 					}

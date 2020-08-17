@@ -34,8 +34,8 @@ if (isset($_GET['type'])) {
     } elseif ($_GET['type'] == 4) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new Pasok;
-            $Pasok->setIdPasok($_GET['id']);
+            $Pasok = new \APP\Pasok();
+            $Pasok->idPasok = $_GET['id'];
             $Pasok->delete();
         } else {
             header('location:index.php');

@@ -54,25 +54,25 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 4) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new Pasok;
-            $Pasok->setIdPasok($_GET['id']);
-            $Pasok->setIdDistributor($_POST['idDistributor']);
-            $Pasok->setIdBuku($_POST['idBuku']);
-            $Pasok->setTglMasuk($_POST['tglMasuk']);
-            $Pasok->setJumlah($_POST['jumlah']);
-            $Pasok->edit();
+            $Pasok = new \APP\Pasok();
+            $Pasok->idPasok = $_GET['id'];
+            $Pasok->idDistributor = $_POST['idDistributor'];
+            $Pasok->idBuku = $_POST['idBuku'];
+            $Pasok->tglMasuk = $_POST['tglMasuk'];
+            $Pasok->jumlah = $_POST['jumlah'];
+            $Pasok->update();
         } else {
             header('location:index.php');
         }
     } elseif ($_POST['type'] == 5) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new Pasok;
-            $Pasok->setIdPasok($_GET['id']);
-            $Pasok->setIdDistributor($_POST['idDistributor']);
-            $Pasok->setIdBuku($_POST['idBuku']);
-            $Pasok->setTglMasuk($_POST['tglMasuk']);
-            $Pasok->setJumlah($_POST['jumlah']);
+            $Pasok = new \APP\Pasok();
+            $Pasok->idPasok = $_GET['id'];
+            $Pasok->idDistributor = $_POST['idDistributor'];
+            $Pasok->idBuku = $_POST['idBuku'];
+            $Pasok->tglMasuk = $_POST['tglMasuk'];
+            $Pasok->jumlah = $_POST['jumlah'];
             $Pasok->tambahPasok();
         } else {
             header('location:index.php');
@@ -82,13 +82,10 @@ if (isset($_POST['type'])) {
     if ($_GET['type'] == 6) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new Pasok;
-            $Pasok->setIdPasok($_GET['id']);
-            $Pasok->setIdDistributor($_GET['idDistributor']);
-            $Pasok->setIdBuku($_GET['idBuku']);
-            // $Pasok->setTglKeluar($_POST['tglKeluar']);
-            // $Pasok->setJumlah($_POST['jumlah']);
-            // $Pasok->tambahStok();
+            $Pasok = new \APP\Pasok();
+            $Pasok->idPasok = $_GET['id'];
+            $Pasok->idDistributor = $_GET['idDistributor'];
+            $Pasok->idBuku = $_GET['idBuku'];
             $Pasok->kirimStok();
         } else {
             header('location:index.php');
