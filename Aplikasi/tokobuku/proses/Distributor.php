@@ -1,96 +1,118 @@
 <?php
-include "Database.php";
-class Distributor{
-	public $id;
-	public $namaDistributor;
-	public $alamat;
-	public $telepon;
+/**
+ * @author Ferdy Sopian
+ */
 
-	function connect(){
-		$Database = new Database;
-		return $Database->connect;
-	}
-	function setId($id){
-		$this->id = $id;
-	}
-	function setNamaDistributor($namaDistributor){
-		$this->namaDistributor = $namaDistributor;
-	}
-	function setAlamat($alamat){
-		$this->alamat = $alamat;
-	}
-	function setTelp($telepon){
-		$this->telepon = $telepon;
-	}
-	function getId(){
-		return $this->id;
-	}
-	function getNamaDistributor(){
-		return $this->namaDistributor;
-	}
-	function getAlamat(){
-		return $this->alamat;
-	}
-	function getTelp(){
-		return $this->telepon;
-	}
+namespace APP;
 
-	function tampil(){
-		$mysql=$this->connect();
-		$query=mysql_query("select * from distributor");
-		$i=0;
-		while($data=mysql_fetch_assoc($query)){
-			$i++;
-			echo	"<tr>".
-			"<td>".$i."</td>".
-			"<td>".$data['namaDistributor']."</td>".
-			"<td>".$data['alamat']."</td>".
-			"<td>".$data['telepon']."</td>".
-			"<td>
-			<a href='distributor.php?id=".$data['idDistributor']."&action=edit'><button>EDIT</button></a>
-			<a href='proses/proses-hapus.php?id=".$data['idDistributor']."&type=1' ><button>HAPUS</button></a>
-			</td>".
-			"</tr>";
-		}
-	}
-	function input(){
-		$mysql=$this->connect();
-		$query = mysql_query("insert into distributor(namaDistributor,alamat,telepon) values('".$this->getNamaDistributor()."','".$this->getAlamat()."','".$this->getTelp()."')");
-		if($query){
-			echo "<script>alert('Data berhasil di tambahkan'); window.location.replace('../distributor.php');</script>";
-		}else{
-			echo "<script>alert('Data gagal di tambahkan'); window.location.replace('../distributor.php');</script>";
-		}
+require_once 'AbstractQuery.php';
 
-	}
-	function edit(){
-		$mysql=$this->connect();
-		$query = mysql_query("update distributor set namaDistributor='".$this->getNamaDistributor()."',alamat='".$this->getAlamat()."',telepon='".$this->getTelp()."' where idDistributor='".$this->getId()."'");
-		if($query){
-			echo "<script>alert('Data berhasil di update'); window.location.replace('../distributor.php');</script>";
-		}else{
-			echo "<script>alert('Data gagal di update'); window.location.replace('../distributor.php');</script>";
-		}
+/**
+ * Class Distributor
+ * @package APP
+ */
+class Distributor extends AbstractQuery
+{
+    public $id;
+    public $namaDistributor;
+    public $alamat;
+    public $telepon;
 
-	}
-	function data($id){
-		$mysql=$this->connect();
-		$query=mysql_query("select * from distributor where idDistributor=".$id);
-		$data=mysql_fetch_assoc($query);
-		$this->setId($data['idDistributor']);
-		$this->setNamaDistributor($data['namaDistributor']);
-		$this->setAlamat($data['alamat']);
-		$this->setTelp($data['telepon']);
-	}
-	function delete(){
-		$mysql=$this->connect();
-		$query = mysql_query("delete from distributor where idDistributor='".$this->getId()."'");
-		if($query){
-			echo "<script>alert('Data berhasil di hapus'); window.location.replace('../distributor.php');</script>";
-		}else{
-			echo "<script>alert('Data gagal di hapus'); window.location.replace('../distributor.php');</script>";
-		}
+    /**
+     * Distributor constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	}
+    /**
+     * @inheritDoc
+     */
+    public function select()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("select * from distributor");
+        if ($koneksi->check_data()) {
+            foreach ($koneksi->show_data() as $key => $value) {
+                echo "<tr>" .
+                     "<td>" . ($key + 1) . "</td>" .
+                     "<td>" . $value['namaDistributor'] . "</td>" .
+                     "<td>" . $value['alamat'] . "</td>" .
+                     "<td>" . $value['telepon'] . "</td>" .
+                     "<td>
+			<a href='distributor.php?id=" . $value['idDistributor'] . "&action=edit'><button>EDIT</button></a>
+			<a href='proses/proses-hapus.php?id=" . $value['idDistributor'] . "&type=1' ><button>HAPUS</button></a>
+			</td>" .
+                     "</tr>";
+            }
+        }
+        $koneksi->close_database();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function insert()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("insert into distributor(namaDistributor,alamat,telepon) values('" . $this->namaDistributor . "','" . $this->alamat . "','" . $this->telepon . "')");
+        if ( ! $koneksi->mysqli()->errno) {
+            echo "<script>alert('Data berhasil di tambahkan'); window.location.replace('../distributor.php');</script>";
+        } else {
+            echo "<script>alert('Data gagal di tambahkan'); window.location.replace('../distributor.php');</script>";
+        }
+        $koneksi->close_database();
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("update distributor set namaDistributor='" . $this->namaDistributor . "',alamat='" . $this->alamat . "',telepon='" . $this->telepon . "' where idDistributor='" . $this->id . "'");
+        if ( ! $koneksi->mysqli()->errno) {
+            echo "<script>alert('Data berhasil di update'); window.location.replace('../distributor.php');</script>";
+        } else {
+            echo "<script>alert('Data gagal di update'); window.location.replace('../distributor.php');</script>";
+        }
+        $koneksi->close_database();
+    }
+
+    /**
+     * @param $id
+     *
+     * @inheritDoc
+     */
+    public function data($id)
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("select * from distributor where idDistributor=" . $id);
+        if ($koneksi->check_data()) {
+            $data                  = $koneksi->show_data()[0];
+            $this->id              = $data['idDistributor'];
+            $this->namaDistributor = $data['namaDistributor'];
+            $this->alamat          = $data['alamat'];
+            $this->telepon         = $data['telepon'];
+        }
+        $koneksi->close_database();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("update distributor set namaDistributor='" . $this->namaDistributor . "',alamat='" . $this->alamat . "',telepon='" . $this->telepon . "' where idDistributor='" . $this->id . "'");
+        if ( ! $koneksi->mysqli()->errno) {
+            echo "<script>alert('Data berhasil di hapus'); window.location.replace('../distributor.php');</script>";
+        } else {
+            echo "<script>alert('Data gagal di hapus'); window.location.replace('../distributor.php');</script>";
+        }
+        $koneksi->close_database();
+    }
 }
-?>
+

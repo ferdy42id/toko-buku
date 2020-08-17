@@ -132,7 +132,7 @@ if($level != 'admin'){
 								header('location:distributor.php');
 							}else{
 								include "proses/Distributor.php";
-								$Distributor = new Distributor;
+								$Distributor = new \APP\Distributor();
 								$Distributor->data($_GET['id']);
 								echo	"
 								<h1>Edit Distributor</h1>
@@ -140,15 +140,15 @@ if($level != 'admin'){
 								<form action=\"proses/proses-edit.php?id=".$_GET['id']."\" method=\"post\">
 								<div class=\"form-group\">
 								<label>Nama Distributor</label>
-								<input type=\"text\" name=\"namaDistributor\" value=\"".$Distributor->getNamaDistributor()."\" required>
+								<input type=\"text\" name=\"namaDistributor\" value=\"".$Distributor->namaDistributor."\" required>
 								</div>
 								<div class=\"form-group\">
 								<label>Alamat</label>
-								<input type=\"text\" name=\"alamat\" value=\"".$Distributor->getAlamat()."\" required>
+								<input type=\"text\" name=\"alamat\" value=\"".$Distributor->alamat."\" required>
 								</div>
 								<div class=\"form-group\">
 								<label>Telpon</label>
-								<input type=\"text\" name=\"telp\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' value=\"".$Distributor->getTelp()."\" required>
+								<input type=\"text\" name=\"telp\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' value=\"".$Distributor->telepon."\" required>
 								</div>
 								<div class=\"form-group\">
 								<input type=\"submit\" name=\"submit\">
@@ -159,7 +159,7 @@ if($level != 'admin'){
 						}
 					}else{
 						include "proses/Distributor.php";
-						$Distributor = new Distributor;
+						$Distributor = new \APP\Distributor();
 						echo	"
 						<h1>Distributor</h1>
 						<hr>
@@ -174,7 +174,7 @@ if($level != 'admin'){
 						</tr>
 						</thead>
 						<tbody>";
-						echo		$Distributor->tampil();
+						echo		$Distributor->select();
 						echo				"</tbody>
 						</table>";
 					}

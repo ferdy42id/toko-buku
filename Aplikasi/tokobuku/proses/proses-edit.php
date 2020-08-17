@@ -7,12 +7,12 @@ if (isset($_POST['type'])) {
     if ($_POST['type'] == 1) {
         if ($level == 'admin') {
             include "Distributor.php";
-            $Distributor = new Distributor;
-            $Distributor->setNamaDistributor($_POST['namaDistributor']);
-            $Distributor->setAlamat($_POST['alamat']);
-            $Distributor->setTelp($_POST['telp']);
-            $Distributor->setId($_GET['id']);
-            $Distributor->edit();
+            $Distributor                  = new \APP\Distributor();
+            $Distributor->namaDistributor = $_POST['namaDistributor'];
+            $Distributor->alamat          = $_POST['alamat'];
+            $Distributor->telepon         = $_POST['telp'];
+            $Distributor->id              = $_GET['id'];
+            $Distributor->update();
         } else {
             header('location:index.php');
         }

@@ -7,8 +7,8 @@ if (isset($_GET['type'])) {
     if ($_GET['type'] == 1) {
         if ($level == 'admin') {
             include "Distributor.php";
-            $Distributor = new Distributor;
-            $Distributor->setId($_GET['id']);
+            $Distributor = new \APP\Distributor();
+            $Distributor->id = $_GET['id'];
             $Distributor->delete();
         } else {
             header('location:index.php');
