@@ -35,7 +35,7 @@ if(isset($_GET['action'])){
 	<?php
 	if($_GET['action'] == 'cetaklaporan'){
 		include 'proses/Penjualan.php';
-		$Penjualan = new Penjualan;
+		$Penjualan = new \APP\Penjualan();
 		echo "
 		<center>
 		<table class=\"s\" border=\"1\">
@@ -57,9 +57,9 @@ if(isset($_GET['action'])){
 		</center>";
 	}else if($_GET['action'] == 'cetaknota'){
 		include 'proses/Penjualan.php';
-		$Penjualan = new Penjualan;
-		$Penjualan->setNoTransaksi($_GET['noTransaksi']);
-		$Penjualan->dataNoTransaksi();
+		$Penjualan = new \APP\Penjualan();
+		$Penjualan->data($_GET['noTransaksi']);
+		$Penjualan->noTransaksi = $_GET['noTransaksi'];
 		echo "
 		<div style=\"text-align: left\">
 		<table>
@@ -76,7 +76,7 @@ if(isset($_GET['action'])){
 		<tr>
 		<td>Kasir</td>
 		<td>:</td>
-		<td>".$Penjualan->getNamaKasir()."</td>
+		<td>".$Penjualan->namaKasir."</td>
 		</tr>
 		</table>
 		</div>
@@ -94,7 +94,7 @@ if(isset($_GET['action'])){
 		<th>Total Bayar</th>
 		</tr>
 		";
-		
+
 		echo $Penjualan->cetakNota();
 		echo	"</tbody>
 		</table>

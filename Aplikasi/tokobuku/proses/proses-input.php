@@ -66,11 +66,11 @@ if (isset($_POST['type'])) {
 
     } elseif ($_POST['type'] == 5) {
         include "Penjualan.php";
-        $Penjualan = new Penjualan;
-        $Penjualan->setIdKasir($_POST['idKasir']);
+        $Penjualan = new \APP\Penjualan();
+        $Penjualan->idKasir = $_POST['idKasir'];
         $Penjualan->jumlah = $_POST['jumlah'];
         $Penjualan->idBuku = $_POST['idBuku'];
-        $Penjualan->tambahCart();
+        $Penjualan->insert();
     } elseif ($_POST['type'] == 6) {
         include "Buku.php";
         $Buku = new Buku;

@@ -100,7 +100,7 @@ if(!isset($_SESSION['username'])) {
 			<div class="content-wrap" style="overflow-y: scroll;">
 				<?php
 				include 'proses/Penjualan.php';
-				$Penjualan = new Penjualan;
+				$Penjualan = new \APP\Penjualan();
 				
 				if(isset($_GET['action'])){
 					if($_GET['action'] == 'input'){
@@ -157,8 +157,8 @@ if(!isset($_SESSION['username'])) {
 						</tr>
 						</thead>
 						<tbody>";
-						$Penjualan->setIdKasir($_SESSION['idKasir']);
-						echo $Penjualan->tampil();
+						$Penjualan->idKasir = $_SESSION['idKasir'];
+						echo $Penjualan->select();
 						echo	"</tbody>
 						</table>
 						</div>";
@@ -183,9 +183,9 @@ if(!isset($_SESSION['username'])) {
 					</thead>
 					<tbody>";
 					if($level == "admin"){
-						echo $Penjualan->tampillaporan();
+						echo $Penjualan->tampilLaporan();
 					}else{
-						echo $Penjualan->tampillaporanCari($_SESSION['idKasir'],0,0);
+						echo $Penjualan->tampilLaporanCari($_SESSION['idKasir'],0,0);
 					}
 					echo	"</tbody>
 					</table>

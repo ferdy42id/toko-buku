@@ -37,7 +37,7 @@ if(isset($_GET['action'])){
 	<?php
 	if($_GET['action'] == 'pembayaran'){
 		include 'proses/Penjualan.php';
-		$Penjualan = new Penjualan;
+		$Penjualan = new \APP\Penjualan();
 		echo "
 		<center>
 		<table border=\"1\">
@@ -53,8 +53,8 @@ if(isset($_GET['action'])){
 		<th>Total Bayar</th>
 		</tr>
 		";
-		$Penjualan->setIdKasir($_SESSION['idKasir']);
-		$Penjualan->setNoTransaksi($_GET['noTransaksi']);
+		$Penjualan->idKasir = $_SESSION['idKasir'];
+		$Penjualan->noTransaksi= $_GET['noTransaksi'];
 		$Penjualan->bayar();
 		echo $Penjualan->prosesBayar();
 		echo	"</tbody>
@@ -63,7 +63,7 @@ if(isset($_GET['action'])){
 	}
 	else if($_GET['action'] == 'konfirmasipembayaran'){
 		include 'proses/Penjualan.php';
-		$Penjualan = new Penjualan;
+		$Penjualan = new \APP\Penjualan();
 		echo "
 		<center>
 		<table border=\"1\">
@@ -79,8 +79,8 @@ if(isset($_GET['action'])){
 		<th>Total Bayar</th>
 		</tr>
 		";
-		$Penjualan->setIdKasir($_SESSION['idKasir']);
-		$Penjualan->setNoTransaksi($_GET['noTransaksi']);
+		$Penjualan->idKasir = $_SESSION['idKasir'];
+		$Penjualan->noTransaksi = $_GET['noTransaksi'];
 		$Penjualan->konfirmasiBayar();
 		echo $Penjualan->prosescetak();
 		echo	"</tbody>

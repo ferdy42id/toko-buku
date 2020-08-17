@@ -100,7 +100,7 @@ if(!isset($_SESSION['username'])) {
 			<div class="content-wrap" style="overflow-y: scroll;">
 				<?php
 				include 'proses/Penjualan.php';
-				$Penjualan = new Penjualan;
+				$Penjualan = new \APP\Penjualan();
 				echo "
 				<div class=\"content\" style=\"max-height: 400px;\">
 				<h1>Laporan</h1>
@@ -164,15 +164,15 @@ if(!isset($_SESSION['username'])) {
 				<tbody>";
 				if($level == "admin"){
 					if(isset($_POST['idKasir'])){
-						echo $Penjualan->tampillaporanCari($_POST['idKasir'],$_POST['awal'],$_POST['tujuan']);
+						echo $Penjualan->tampilLaporanCari($_POST['idKasir'],$_POST['awal'],$_POST['tujuan']);
 					}else{
-						echo $Penjualan->tampillaporan();
+						echo $Penjualan->tampilLaporan();
 					}
 				}else{
 					if(isset($_POST['idKasir'])){
-						echo $Penjualan->tampillaporanCari($_POST['idKasir'],$_POST['awal'],$_POST['tujuan']);
+						echo $Penjualan->tampilLaporanCari($_POST['idKasir'],$_POST['awal'],$_POST['tujuan']);
 					}else{
-						echo $Penjualan->tampillaporanCari($_SESSION['idKasir'],0,0);
+						echo $Penjualan->tampilLaporanCari($_SESSION['idKasir'],0,0);
 					}
 				}
 				echo	"</tbody>

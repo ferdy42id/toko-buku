@@ -228,7 +228,7 @@ if (isset($_SESSION['level'])) {
 						<th>Diskon</th>
 						<th>Stok</th>";
                 if ($level == 'admin') {
-                    echo "<th>Action</th>";;
+                    echo "<th>Action</th>";
                 }
                 echo "
 						</tr>
