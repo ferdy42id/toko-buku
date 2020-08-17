@@ -126,7 +126,7 @@ class Buku extends AbstractQuery
         if ($koneksi->check_data()) {
             foreach ($koneksi->show_data() as $key => $value) {
                 echo "<tr>" .
-                     "<td>" . ( $key + 1 ) . "</td>" .
+                     "<td>" . ($key + 1) . "</td>" .
                      "<td>" . $value['judulBuku'] . "</td>" .
                      "<td>" . $value['penulis'] . "</td>" .
                      "<td>" . $value['tahunTerbit'] . "</td>" .
@@ -175,5 +175,3 @@ class Buku extends AbstractQuery
         $koneksi->close_database();
     }
 }
-
-?>
