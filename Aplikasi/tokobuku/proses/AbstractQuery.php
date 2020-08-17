@@ -2,10 +2,16 @@
 /**
  * @author Ferdy Sopian
  */
+
+namespace APP;
+
 require_once "config/Data.php";
+
+use APP\Config\Data;
 
 /**
  * Class AbstractQuery
+ * @package APP
  */
 abstract class AbstractQuery
 {

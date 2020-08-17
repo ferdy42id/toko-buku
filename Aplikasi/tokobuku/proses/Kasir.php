@@ -2,21 +2,25 @@
 /**
  * @author Ferdy Sopian
  */
+
+namespace APP;
+
 require_once 'AbstractQuery.php';
 
 /**
  * Class Kasir
+ * @package APP
  */
 class Kasir extends AbstractQuery
 {
-    protected $id;
-    protected $username;
-    protected $password;
-    protected $nama;
-    protected $alamat;
-    protected $telepon;
-    protected $status;
-    protected $level;
+    public $id;
+    public $username;
+    public $password;
+    public $nama;
+    public $alamat;
+    public $telepon;
+    public $status;
+    public $level;
 
     /**
      * Kasir constructor.
@@ -82,8 +86,8 @@ class Kasir extends AbstractQuery
     public function ubahStatus()
     {
         $koneksi = $this->connection();
-        $koneksi->query("update kasir set status=" . $this->__get('status') . " where idKasir=" . $this->__get('id'));
-        if ($koneksi->mysqli()->query) {
+        $koneksi->query("update kasir set status=" . $this->status . " where idKasir=" . $this->id);
+        if ( ! $koneksi->mysqli()->errno) {
             echo "<script>window.location.replace('../kasir.php');</script>";
         }
         $koneksi->close_database();
@@ -96,7 +100,7 @@ class Kasir extends AbstractQuery
     {
         $koneksi = $this->connection();
         $koneksi->query("update kasir set nama='" . $this->nama . "',alamat='" . $this->alamat . "',telepon='" . $this->telepon . "',status='" . $this->status . "',level='" . $this->level . "',username='" . $this->username . "',password='" . $this->password . "' where idKasir='" . $this->id . "'");
-        if ($koneksi->mysqli()->query) {
+        if ( ! $koneksi->mysqli()->errno) {
             echo "<script>alert('Data berhasil di update'); window.location.replace('../kasir.php');</script>";
         }
         $koneksi->close_database();
@@ -109,7 +113,7 @@ class Kasir extends AbstractQuery
     {
         $koneksi = $this->connection();
         $koneksi->query("delete from kasir where idKasir='" . $this->id . "'");
-        if ($koneksi->mysqli()->query) {
+        if ( ! $koneksi->mysqli()->errno) {
             echo "<script>alert('Data berhasil di hapus'); window.location.replace('../kasir.php');</script>";
         }
         $koneksi->close_database();
@@ -144,8 +148,8 @@ class Kasir extends AbstractQuery
     public function insert()
     {
         $koneksi = $this->connection();
-        $koneksi->query("insert into kasir(nama,alamat,telepon,status,level,username,password) values('" . $this->__get('nama') . "','" . $this->__get('alamat') . "','" . $this->__get('telepon') . "','" . $this->__get('status') . "','" . $this->__get('level') . "','" . $this->__get('username') . "','" . $this->__get('password') . "')");
-        if ($koneksi->mysqli()->query) {
+        $koneksi->query("insert into kasir(nama,alamat,telepon,status,level,username,password) values('" . $this->nama . "','" . $this->alamat . "','" . $this->telepon . "','" . $this->status . "','" . $this->level . "','" . $this->username . "','" . $this->password . "')");
+        if ( ! $koneksi->mysqli()->errno) {
             echo "<script>alert('Simpan Password anda : " . $this->__get('password') . "'); window.location.replace('../kasir.php');</script>";
         }
         $koneksi->close_database();

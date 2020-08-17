@@ -2,10 +2,13 @@
 /**
  * @author Ferdy Sopian
  */
+namespace APP\Config;
+
 include "Database.php";
 
 /**
  * Class Data
+ * @package APP\Config
  */
 class Data extends Database
 {
