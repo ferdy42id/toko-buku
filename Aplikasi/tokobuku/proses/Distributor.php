@@ -106,7 +106,7 @@ class Distributor extends AbstractQuery
     public function delete()
     {
         $koneksi = $this->connection();
-        $koneksi->query("update distributor set namaDistributor='" . $this->namaDistributor . "',alamat='" . $this->alamat . "',telepon='" . $this->telepon . "' where idDistributor='" . $this->id . "'");
+        $koneksi->query("delete from distributor where idDistributor='".$this->id."'");
         if ( ! $koneksi->mysqli()->errno) {
             echo "<script>alert('Data berhasil di hapus'); window.location.replace('../distributor.php');</script>";
         } else {

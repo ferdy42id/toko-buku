@@ -2,7 +2,10 @@
 /**
  * @author Ferdy Sopian
  */
+
 namespace APP\Config;
+
+use mysqli;
 
 /**
  * Class Database
@@ -44,7 +47,7 @@ class Database
     /**
      * connection to the MySQL server
      *
-     * @var \mysqli|false
+     * @var mysqli|false
      */
     private $db;
 
@@ -72,8 +75,8 @@ class Database
      */
     public function connect()
     {
-        if (! empty($this->user) && ! empty($this->pass) && ! empty($this->database) && ! empty($this->host)) {
-            $this->db = new \mysqli($this->host, $this->user, $this->pass, $this->database);
+        if ( ! empty($this->user) && ! empty($this->pass) && ! empty($this->database) && ! empty($this->host)) {
+            $this->db = new mysqli($this->host, $this->user, $this->pass, $this->database);
             if ($this->db->connect_errno > 0) {
                 die('Koneksi Gagal : ' . $this->db->connect_error);
             }
@@ -86,7 +89,7 @@ class Database
     /**
      * The connection to the MySQL server
      *
-     * @return false|\mysqli
+     * @return false|mysqli
      */
     public function mysqli()
     {
@@ -101,8 +104,9 @@ class Database
     public function query($sql)
     {
         $this->connect();
+        $this->db->query("SET sql_mode = '';");
         $this->query = $this->db->query($sql);
-        if (! $this->query) {
+        if ( ! $this->query) {
             die('Koneksi Gagal : ' . $this->db->error);
         }
     }

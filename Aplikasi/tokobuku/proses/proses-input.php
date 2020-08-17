@@ -1,4 +1,11 @@
 <?php
+
+use APP\Buku;
+use APP\Distributor;
+use APP\Kasir;
+use APP\Pasok;
+use APP\Penjualan;
+
 session_start();
 if (isset($_SESSION['level'])) {
     $level = $_SESSION['level'];
@@ -7,7 +14,7 @@ if (isset($_POST['type'])) {
     if ($_POST['type'] == 1) {
         if ($level == 'admin') {
             include "Distributor.php";
-            $Distributor = new \APP\Distributor();
+            $Distributor                  = new Distributor();
             $Distributor->namaDistributor = $_POST['namaDistributor'];
             $Distributor->alamat          = $_POST['alamat'];
             $Distributor->telepon         = $_POST['telp'];
@@ -21,7 +28,7 @@ if (isset($_POST['type'])) {
             $kode = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             $acak = substr(str_shuffle($kode), 0, 5);
             include "Kasir.php";
-            $Kasir           = new \APP\Kasir();
+            $Kasir           = new Kasir();
             $Kasir->nama     = $_POST['namaKasir'];
             $Kasir->alamat   = $_POST['alamat'];
             $Kasir->telepon  = $_POST['telp'];
@@ -36,7 +43,7 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 3) {
         if ($level == 'admin') {
             include "Buku.php";
-            $Buku              = new \APP\Buku();
+            $Buku              = new Buku();
             $Buku->judul       = $_POST['judulBuku'];
             $Buku->noISBN      = $_POST['noISBN'];
             $Buku->penulis     = $_POST['penulis'];
@@ -47,18 +54,18 @@ if (isset($_POST['type'])) {
             $Buku->hargaJual   = $_POST['hargaJual'];
             $Buku->PPN         = $_POST['PPN'];
             $Buku->diskon      = $_POST['diskon'];
-            $Buku->input();
+            $Buku->insert();
         } else {
             header('location:index.php');
         }
     } elseif ($_POST['type'] == 4) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new \APP\Pasok();
+            $Pasok                = new Pasok();
             $Pasok->idDistributor = $_POST['idDistributor'];
-            $Pasok->idBuku = $_POST['idBuku'];
-            $Pasok->jumlah = $_POST['jumlah'];
-            $Pasok->tglMasuk = $_POST['tglMasuk'];
+            $Pasok->idBuku        = $_POST['idBuku'];
+            $Pasok->jumlah        = $_POST['jumlah'];
+            $Pasok->tglMasuk      = $_POST['tglMasuk'];
             $Pasok->insert();
         } else {
             header('location:index.php');
@@ -66,10 +73,10 @@ if (isset($_POST['type'])) {
 
     } elseif ($_POST['type'] == 5) {
         include "Penjualan.php";
-        $Penjualan = new \APP\Penjualan();
+        $Penjualan          = new Penjualan();
         $Penjualan->idKasir = $_POST['idKasir'];
-        $Penjualan->jumlah = $_POST['jumlah'];
-        $Penjualan->idBuku = $_POST['idBuku'];
+        $Penjualan->jumlah  = $_POST['jumlah'];
+        $Penjualan->idBuku  = $_POST['idBuku'];
         $Penjualan->insert();
     } elseif ($_POST['type'] == 6) {
         include "Buku.php";

@@ -183,7 +183,7 @@ class Penjualan extends AbstractQuery
 						(hargaJual*(jumlah+" . $this->jumlah . ")*(diskon/100))
 					) where idBuku='" . $this->idBuku . "' and status=0 and idKasir='" . $this->idKasir . "'");
                     } else {
-                        $koneksi->query("insert into penjualan(idBuku,idKasir,jumlah,totalBayar,status) values('" . $this->idBuku . "','" . $this->idKasir . "','" . $this->jumlah . "',
+                        $koneksi->query("insert into penjualan(noTransaksi,tglTransaksi,idBuku,idKasir,jumlah,totalBayar,status) values('','0000-00-00','" . $this->idBuku . "','" . $this->idKasir . "','" . $this->jumlah . "',
 					(select (hargaJual*" . $this->jumlah . ")+
 					((hargaJual*" . $this->jumlah . ")*(PPN/100))-
 					((hargaJual*" . $this->jumlah . ")*(diskon/100)) from buku where idBuku='" . $this->idBuku . "'),0)");

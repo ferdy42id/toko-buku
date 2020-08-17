@@ -1,4 +1,7 @@
 <?php
+
+use APP\Buku;
+
 session_start();
 if ( ! isset($_SESSION['username'])) {
     header('location:login.php');
@@ -157,7 +160,7 @@ if (isset($_SESSION['level'])) {
                         header('location:buku.php');
                     } else {
                         include "proses/Buku.php";
-                        $Buku = new \APP\Buku();
+                        $Buku = new Buku();
                         $Buku->data($_GET['id']);
                         echo "
 								<h1>Edit Buku</h1>
@@ -212,7 +215,7 @@ if (isset($_SESSION['level'])) {
                 }
             } else {
                 include "proses/Buku.php";
-                $Buku = new \APP\Buku();
+                $Buku = new Buku();
                 echo "
 						<h1>Buku</h1>
 						<hr>

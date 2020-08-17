@@ -45,7 +45,7 @@ class Pasok extends AbstractQuery
     /**
      * @param $id
      */
-	public function tampilDisSelected($id)
+    public function tampilDisSelected($id)
     {
         $koneksi = $this->connection();
         $koneksi->query("select * from distributor where idDistributor=" . $id);
@@ -59,7 +59,7 @@ class Pasok extends AbstractQuery
     /**
      * @param $id
      */
-	public function tampilDis($id)
+    public function tampilDis($id)
     {
         $koneksi = $this->connection();
         $koneksi->query("select * from distributor");
@@ -80,7 +80,7 @@ class Pasok extends AbstractQuery
     /**
      * @param $id
      */
-	public function tampilBuk($id)
+    public function tampilBuk($id)
     {
         $koneksi = $this->connection();
         $koneksi->query("select * from buku");
@@ -101,7 +101,7 @@ class Pasok extends AbstractQuery
     /**
      *
      */
-	public function select()
+    public function select()
     {
         $koneksi = $this->connection();
         $koneksi->query("select * from pasok join buku using(idBuku) join distributor using(idDistributor)");
@@ -123,17 +123,17 @@ class Pasok extends AbstractQuery
         $koneksi->close_database();
     }
 
-	public function insert()
+    public function insert()
     {
         $koneksi = $this->connection();
-        $koneksi->query("insert into pasok(idDistributor,idBuku,jumlah,tglMasuk,tglKeluar) values('" . $this->idDistributor . "','" . $this->idBuku . "','" . $this->jumlah . "','" . $this->tglMasuk . "',NOW())");
+        $koneksi->query("insert into pasok(idDistributor,idBuku,jumlah,tglMasuk,tglKeluar) values('" . $this->idDistributor . "','" . $this->idBuku . "','" . $this->jumlah . "','" . $this->tglMasuk . "','0000-00-00')");
         if ( ! $koneksi->mysqli()->errno) {
             echo "<script>alert('Data berhasil di tambahkan'); window.location.replace('../pasok.php');</script>";
         }
         $koneksi->close_database();
     }
 
-	public function tambahPasok()
+    public function tambahPasok()
     {
         $koneksi = $this->connection();
         $koneksi->query("update pasok set idDistributor='" . $this->idDistributor . "',idBuku='" . $this->idBuku . "',jumlah=jumlah+" . $this->jumlah . ",tglMasuk='" . $this->tglMasuk . "',tglKeluar='" . $this->tglKeluar . "' where idPasok='" . $this->idPasok . "'");
@@ -144,7 +144,7 @@ class Pasok extends AbstractQuery
 
     }
 
-	public function kirimStok()
+    public function kirimStok()
     {
         $koneksi = $this->connection();
         $koneksi->query("select * from pasok where idPasok=" . $this->idPasok);
@@ -161,7 +161,7 @@ class Pasok extends AbstractQuery
         $koneksi->close_database();
     }
 
-	public function update()
+    public function update()
     {
         $koneksi = $this->connection();
         $koneksi->query("update pasok set idDistributor='" . $this->idDistributor . "',idBuku='" . $this->idBuku . "',jumlah='" . $this->jumlah . "',tglMasuk='" . $this->tglMasuk . "',tglKeluar='" . $this->tglKeluar . "' where idPasok='" . $this->idPasok . "'");
@@ -171,7 +171,7 @@ class Pasok extends AbstractQuery
         $koneksi->close_database();
     }
 
-	public function data($id)
+    public function data($id)
     {
         $koneksi = $this->connection();
         $koneksi->query("select * from pasok where idPasok=" . $id);
@@ -187,13 +187,13 @@ class Pasok extends AbstractQuery
         $koneksi->close_database();
     }
 
-	public function delete()
+    public function delete()
     {
         $koneksi = $this->connection();
         $koneksi->query("delete from pasok where idPasok='" . $this->idPasok . "'");
         if ( ! $koneksi->mysqli()->errno) {
             echo "<script>alert('Data berhasil di hapus'); window.location.replace('../pasok.php');</script>";
         }
-		$koneksi->close_database();
+        $koneksi->close_database();
     }
 }

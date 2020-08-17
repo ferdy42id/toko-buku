@@ -1,4 +1,10 @@
 <?php
+
+use APP\Buku;
+use APP\Distributor;
+use APP\Kasir;
+use APP\Pasok;
+
 session_start();
 if (isset($_SESSION['level'])) {
     $level = $_SESSION['level'];
@@ -7,7 +13,7 @@ if (isset($_POST['type'])) {
     if ($_POST['type'] == 1) {
         if ($level == 'admin') {
             include "Distributor.php";
-            $Distributor                  = new \APP\Distributor();
+            $Distributor                  = new Distributor();
             $Distributor->namaDistributor = $_POST['namaDistributor'];
             $Distributor->alamat          = $_POST['alamat'];
             $Distributor->telepon         = $_POST['telp'];
@@ -19,7 +25,7 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 2) {
         if ($level == 'admin') {
             include "Kasir.php";
-            $Kasir           = new \APP\Kasir();
+            $Kasir           = new Kasir();
             $Kasir->nama     = $_POST['namaKasir'];
             $Kasir->alamat   = $_POST['alamat'];
             $Kasir->telepon  = $_POST['telp'];
@@ -35,7 +41,7 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 3) {
         if ($level == 'admin') {
             include "Buku.php";
-            $Buku              = new \APP\Buku();
+            $Buku              = new Buku();
             $Buku->id          = $_GET['id'];
             $Buku->judul       = $_POST['judulBuku'];
             $Buku->noISBN      = $_POST['noISBN'];
@@ -54,12 +60,12 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 4) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new \APP\Pasok();
-            $Pasok->idPasok = $_GET['id'];
+            $Pasok                = new Pasok();
+            $Pasok->idPasok       = $_GET['id'];
             $Pasok->idDistributor = $_POST['idDistributor'];
-            $Pasok->idBuku = $_POST['idBuku'];
-            $Pasok->tglMasuk = $_POST['tglMasuk'];
-            $Pasok->jumlah = $_POST['jumlah'];
+            $Pasok->idBuku        = $_POST['idBuku'];
+            $Pasok->tglMasuk      = $_POST['tglMasuk'];
+            $Pasok->jumlah        = $_POST['jumlah'];
             $Pasok->update();
         } else {
             header('location:index.php');
@@ -67,12 +73,12 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 5) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new \APP\Pasok();
-            $Pasok->idPasok = $_GET['id'];
+            $Pasok                = new Pasok();
+            $Pasok->idPasok       = $_GET['id'];
             $Pasok->idDistributor = $_POST['idDistributor'];
-            $Pasok->idBuku = $_POST['idBuku'];
-            $Pasok->tglMasuk = $_POST['tglMasuk'];
-            $Pasok->jumlah = $_POST['jumlah'];
+            $Pasok->idBuku        = $_POST['idBuku'];
+            $Pasok->tglMasuk      = $_POST['tglMasuk'];
+            $Pasok->jumlah        = $_POST['jumlah'];
             $Pasok->tambahPasok();
         } else {
             header('location:index.php');
@@ -82,10 +88,10 @@ if (isset($_POST['type'])) {
     if ($_GET['type'] == 6) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new \APP\Pasok();
-            $Pasok->idPasok = $_GET['id'];
+            $Pasok                = new Pasok();
+            $Pasok->idPasok       = $_GET['id'];
             $Pasok->idDistributor = $_GET['idDistributor'];
-            $Pasok->idBuku = $_GET['idBuku'];
+            $Pasok->idBuku        = $_GET['idBuku'];
             $Pasok->kirimStok();
         } else {
             header('location:index.php');
@@ -94,7 +100,7 @@ if (isset($_POST['type'])) {
     if ($_GET['type'] == 7) {
         if ($level == 'admin') {
             include "Kasir.php";
-            $Kasir         = new \APP\Kasir();
+            $Kasir         = new Kasir();
             $Kasir->id     = $_GET['id'];
             $Kasir->status = $_GET['status'];
             $Kasir->ubahStatus();

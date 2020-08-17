@@ -2,6 +2,7 @@
 /**
  * @author Ferdy Sopian
  */
+
 namespace APP\Config;
 
 include "Database.php";

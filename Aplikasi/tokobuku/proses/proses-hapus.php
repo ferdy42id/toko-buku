@@ -1,4 +1,10 @@
 <?php
+
+use APP\Buku;
+use APP\Distributor;
+use APP\Kasir;
+use APP\Pasok;
+
 session_start();
 if (isset($_SESSION['level'])) {
     $level = $_SESSION['level'];
@@ -7,7 +13,7 @@ if (isset($_GET['type'])) {
     if ($_GET['type'] == 1) {
         if ($level == 'admin') {
             include "Distributor.php";
-            $Distributor = new \APP\Distributor();
+            $Distributor     = new Distributor();
             $Distributor->id = $_GET['id'];
             $Distributor->delete();
         } else {
@@ -16,7 +22,7 @@ if (isset($_GET['type'])) {
     } elseif ($_GET['type'] == 2) {
         if ($level == 'admin') {
             include "Kasir.php";
-            $Kasir     = new \APP\Kasir();
+            $Kasir     = new Kasir();
             $Kasir->id = $_GET['id'];
             $Kasir->delete();
         } else {
@@ -25,7 +31,7 @@ if (isset($_GET['type'])) {
     } elseif ($_GET['type'] == 3) {
         if ($level == 'admin') {
             include "Buku.php";
-            $Buku     = new \APP\Buku();
+            $Buku     = new Buku();
             $Buku->id = $_GET['id'];
             $Buku->delete();
         } else {
@@ -34,7 +40,7 @@ if (isset($_GET['type'])) {
     } elseif ($_GET['type'] == 4) {
         if ($level == 'admin') {
             include "Pasok.php";
-            $Pasok = new \APP\Pasok();
+            $Pasok          = new Pasok();
             $Pasok->idPasok = $_GET['id'];
             $Pasok->delete();
         } else {
