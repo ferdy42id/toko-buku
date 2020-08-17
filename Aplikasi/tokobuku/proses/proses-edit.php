@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['level'])) {
-    $level=$_SESSION['level'];
+    $level = $_SESSION['level'];
 }
 if (isset($_POST['type'])) {
     if ($_POST['type'] == 1) {
@@ -19,15 +19,15 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 2) {
         if ($level == 'admin') {
             include "Kasir.php";
-            $Kasir = new \APP\Kasir();
-            $Kasir->nama = $_POST['namaKasir'];
-            $Kasir->alamat = $_POST['alamat'];
-            $Kasir->telepon = $_POST['telp'];
+            $Kasir           = new \APP\Kasir();
+            $Kasir->nama     = $_POST['namaKasir'];
+            $Kasir->alamat   = $_POST['alamat'];
+            $Kasir->telepon  = $_POST['telp'];
             $Kasir->username = $_POST['username'];
             $Kasir->password = $_POST['password'];
-            $Kasir->status = $_POST['status'];
-            $Kasir->level = $_POST['level'];
-            $Kasir->id = $_GET['id'];
+            $Kasir->status   = $_POST['status'];
+            $Kasir->level    = $_POST['level'];
+            $Kasir->id       = $_GET['id'];
             $Kasir->update();
         } else {
             header('location:index.php');
@@ -35,19 +35,19 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 3) {
         if ($level == 'admin') {
             include "Buku.php";
-            $Buku = new Buku;
-            $Buku->setId($_GET['id']);
-            $Buku->setJudul($_POST['judulBuku']);
-            $Buku->setNoISBN($_POST['noISBN']);
-            $Buku->setPenulis($_POST['penulis']);
-            $Buku->setPenerbit($_POST['penerbit']);
-            $Buku->setTahunTerbit($_POST['tahunTerbit']);
-            $Buku->setStok($_POST['stok']);
-            $Buku->setHargaPokok($_POST['hargaPokok']);
-            $Buku->setHargaJual($_POST['hargaJual']);
-            $Buku->setPPN($_POST['PPN']);
-            $Buku->setDiskon($_POST['diskon']);
-            $Buku->edit();
+            $Buku              = new \APP\Buku();
+            $Buku->id          = $_GET['id'];
+            $Buku->judul       = $_POST['judulBuku'];
+            $Buku->noISBN      = $_POST['noISBN'];
+            $Buku->penulis     = $_POST['penulis'];
+            $Buku->penerbit    = $_POST['penerbit'];
+            $Buku->tahunTerbit = $_POST['tahunTerbit'];
+            $Buku->stok        = $_POST['stok'];
+            $Buku->hargaPokok  = $_POST['hargaPokok'];
+            $Buku->hargaJual   = $_POST['hargaJual'];
+            $Buku->PPN         = $_POST['PPN'];
+            $Buku->diskon      = $_POST['diskon'];
+            $Buku->update();
         } else {
             header('location:index.php');
         }
@@ -97,8 +97,8 @@ if (isset($_POST['type'])) {
     if ($_GET['type'] == 7) {
         if ($level == 'admin') {
             include "Kasir.php";
-            $Kasir = new \APP\Kasir();
-            $Kasir->id = $_GET['id'];
+            $Kasir         = new \APP\Kasir();
+            $Kasir->id     = $_GET['id'];
             $Kasir->status = $_GET['status'];
             $Kasir->ubahStatus();
         } else {

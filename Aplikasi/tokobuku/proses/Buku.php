@@ -1,197 +1,179 @@
 <?php
-include 'Database.php';
-class Buku{
-	public $id;
-	public $judul;
-	public $noISBN;
-	public $penulis;
-	public $penerbit;
-	public $tahunTerbit;
-	public $stok;
-	public $hargaPokok;
-	public $hargaJual;
-	public $PPN;
-	public $diskon;	
+/**
+ * @author Ferdy Sopian
+ */
 
-	function connect(){
-		$Database = new Database;
-		return $Database->connect;
-	}
+namespace APP;
 
-	function setId($id){
-		$this->id = $id;
-	}
-	function setJudul($judul){
-		$this->judul = $judul;
-	}
-	function setNoISBN($noISBN){
-		$this->noISBN = $noISBN;
-	}
-	function setPenulis($penulis){
-		$this->penulis = $penulis;
-	}
-	function setPenerbit($penerbit){
-		$this->penerbit = $penerbit;
-	}
-	function setTahunTerbit($tahunTerbit){
-		$this->tahunTerbit = $tahunTerbit;
-	}
-	function setStok($stok){
-		$this->stok = $stok;
-	}
-	function setHargaPokok($hargaPokok){
-		$this->hargaPokok = $hargaPokok;
-	}
-	function setHargaJual($hargaJual){
-		$this->hargaJual = $hargaJual;
-	}
-	function setPPN($PPN){
-		$this->PPN = $PPN;
-	}
-	function setDiskon($diskon){
-		$this->diskon = $diskon;
-	}
+require_once 'AbstractQuery.php';
 
-	function getId(){
-		return	$this->id;
-	}
-	function getJudul(){
-		return	$this->judul;
-	}
-	function getNoISBN(){
-		return	$this->noISBN;
-	}
-	function getPenulis(){
-		return	$this->penulis;
-	}
-	function getPenerbit(){
-		return	$this->penerbit;
-	}
-	function getTahunTerbit(){
-		return	$this->tahunTerbit;
-	}
-	function getStok(){
-		return	$this->stok;
-	}
-	function getHargaPokok(){
-		return	$this->hargaPokok;
-	}
-	function getHargaJual(){
-		return	$this->hargaJual;
-	}
-	function getPPN(){
-		return	$this->PPN;
-	}
-	function getDiskon(){
-		return	$this->diskon;
-	}
-	function search($keywords){
-		$mysql=$this->connect();
-		// if($keywords == null){
-		// 	$keywords = " ";
-		// }
-		$query=mysql_query("select * from buku where judulBuku like '%".mysql_real_escape_string($keywords)."%' or penulis like '%".mysql_real_escape_string($keywords)."%' or tahunTerbit like '%".mysql_real_escape_string($keywords)."%'");
-		$i=0;
-		while($data=mysql_fetch_assoc($query)){
-			$i++;
-			echo	"<tr>".
-			"<td>".$i."</td>".
-			"<td>".$data['judulBuku']."</td>".
-			"<td>".$data['penulis']."</td>".
-			"<td>".$data['tahunTerbit']."</td>".
-			"<td>Rp.".number_format($data['hargaJual'],2,',','.')."</td>".
-			"<td>".$data['PPN']."%</td>".
-			"<td>".$data['diskon']."%</td>".	
-			"<td>".$data['stok']."</td>";
-			if($_SESSION['level'] == 'admin'){
-				echo "<td>
+/**
+ * Class Buku
+ * @package APP
+ */
+class Buku extends AbstractQuery
+{
+    public $id;
+    public $judul;
+    public $noISBN;
+    public $penulis;
+    public $penerbit;
+    public $tahunTerbit;
+    public $stok;
+    public $hargaPokok;
+    public $hargaJual;
+    public $PPN;
+    public $diskon;
+
+    /**
+     * Buku constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @param $keywords
+     */
+    function search($keywords)
+    {
+        if (null == $keywords) {
+            $keywords = " ";
+        }
+        $koneksi = $this->connection();
+        $koneksi->query("select * from buku where judulBuku like '%" . $koneksi->mysqli()->real_escape_string($keywords) . "%' or penulis like '%" . $koneksi->mysqli()->real_escape_string($keywords) . "%' or tahunTerbit like '%" . $koneksi->mysqli()->real_escape_string($keywords) . "%'");
+        if ($koneksi->check_data()) {
+            foreach ($koneksi->show_data() as $key => $value) {
+                echo "<tr>" .
+                     "<td>" . ($key + 1) . "</td>" .
+                     "<td>" . $value['judulBuku'] . "</td>" .
+                     "<td>" . $value['penulis'] . "</td>" .
+                     "<td>" . $value['tahunTerbit'] . "</td>" .
+                     "<td>Rp." . number_format($value['hargaJual'], 2, ',', '.') . "</td>" .
+                     "<td>" . $value['PPN'] . "%</td>" .
+                     "<td>" . $value['diskon'] . "%</td>" .
+                     "<td>" . $value['stok'] . "</td>";
+                if ($_SESSION['level'] == 'admin') {
+                    echo "<td>
 				<form action=\"proses/proses-input.php\" method=\"post\">
 										<input style=\"display:block; width:100%;\" type=\"text\" name=\"jumlah\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 										<input type=\"hidden\" name=\"type\" value=\"5\">
-										<input type=\"hidden\" name=\"idBuku\" value=\"".$data['idBuku']."\">
+										<input type=\"hidden\" name=\"idBuku\" value=\"" . $value['idBuku'] . "\">
 						<input type=\"hidden\" name=\"idKasir\" value=\"$_SESSION[idKasir]\">
 						<input style=\"display:block; width:100%;\" type=\"submit\" name=\"submit\" value =\"Tambah Keranjang\">
 				</form>
-				<a href='buku.php?id=".$data['idBuku']."&action=edit'><button>EDIT</button></a>
-				<a href='proses/proses-hapus.php?id=".$data['idBuku']."&type=3' ><button>HAPUS</button></a>
+				<a href='buku.php?id=" . $value['idBuku'] . "&action=edit'><button>EDIT</button></a>
+				<a href='proses/proses-hapus.php?id=" . $value['idBuku'] . "&type=3' ><button>HAPUS</button></a>
 				</td>";
-			}
-			"</tr>";
-		}
-		mysql_close($mysql);
-	}
-	function tampil(){
-		$mysql=$this->connect();
-		$query=mysql_query("select * from buku");
-		$i=0;
-		while($data=mysql_fetch_assoc($query)){
-			$i++;
-			echo	"<tr>".
-			"<td>".$i."</td>".
-			"<td>".$data['judulBuku']."</td>".
-			"<td>".$data['penulis']."</td>".
-			"<td>".$data['tahunTerbit']."</td>".
-			"<td>Rp.".number_format($data['hargaJual'],2,',','.')."</td>".
-			"<td>".$data['PPN']."%</td>".
-			"<td>".$data['diskon']."%</td>".	
-			"<td>".$data['stok']."</td>";
-			if($_SESSION['level'] == 'admin'){
-				echo "<td>
-				<a href='buku.php?id=".$data['idBuku']."&action=edit'><button>EDIT</button></a>
-				<a href='proses/proses-hapus.php?id=".$data['idBuku']."&type=3' ><button>HAPUS</button></a>
+                }
+                "</tr>";
+            }
+        }
+        $koneksi->close_database();
+    }
+
+    /**
+     * @param $id
+     *
+     * @inheritDoc
+     */
+    public function data($id)
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("select * from buku where idBuku=" . $id);
+        if ($koneksi->check_data()) {
+            $data              = $koneksi->show_data()[0];
+            $this->id          = $id;
+            $this->judul       = $data['judulBuku'];
+            $this->noISBN      = $data['noISBN'];
+            $this->penulis     = $data['penulis'];
+            $this->penerbit    = $data['penerbit'];
+            $this->tahunTerbit = $data['tahunTerbit'];
+            $this->stok        = $data['stok'];
+            $this->hargaPokok  = $data['hargaPokok'];
+            $this->hargaJual   = $data['hargaJual'];
+            $this->PPN         = $data['PPN'];
+            $this->diskon      = $data['diskon'];
+        }
+        $koneksi->close_database();
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("delete from buku where idBuku='" . $this->id . "'");
+        if ( ! $koneksi->mysqli()->errno) {
+            echo "<script>alert('Data berhasil di hapus'); window.location.replace('../buku.php');</script>";
+        } else {
+            echo "<script>alert('Data gagal di hapus'); window.location.replace('../buku.php');</script>";
+        }
+        $koneksi->close_database();
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function select()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("select * from buku");
+        if ($koneksi->check_data()) {
+            foreach ($koneksi->show_data() as $key => $value) {
+                echo "<tr>" .
+                     "<td>" . ( $key + 1 ) . "</td>" .
+                     "<td>" . $value['judulBuku'] . "</td>" .
+                     "<td>" . $value['penulis'] . "</td>" .
+                     "<td>" . $value['tahunTerbit'] . "</td>" .
+                     "<td>Rp." . number_format($value['hargaJual'], 2, ',', '.') . "</td>" .
+                     "<td>" . $value['PPN'] . "%</td>" .
+                     "<td>" . $value['diskon'] . "%</td>" .
+                     "<td>" . $value['stok'] . "</td>";
+                if ($_SESSION['level'] == 'admin') {
+                    echo "<td>
+				<a href='buku.php?id=" . $value['idBuku'] . "&action=edit'><button>EDIT</button></a>
+				<a href='proses/proses-hapus.php?id=" . $value['idBuku'] . "&type=3' ><button>HAPUS</button></a>
 				</td>";
-			}
-			"</tr>";
-		}
-		mysql_close($mysql);
-	}
-	function input(){
-		$mysql=$this->connect();
-		$query = mysql_query("insert into buku(judulBuku,noISBN,penulis,penerbit,tahunTerbit,stok,hargaPokok,hargaJual,PPN,diskon) values('".$this->getJudul()."','".$this->getNoISBN()."','".$this->getPenulis()."','".$this->getPenerbit()."','".$this->getTahunTerbit()."','".$this->getStok()."','".$this->getHargaPokok()."','".$this->getHargaJual()."','".$this->getPPN()."','".$this->getDiskon()."')");
-		if($query){
-			echo "<script>alert('Data berhasil di tambahkan'); window.location.replace('../buku.php');</script>";
-		}else{
-			echo "<script>alert('Data gagal di tambahkan'); window.location.replace('../buku.php');</script>";
-		}
+                }
+                "</tr>";
+            }
+        }
+        $koneksi->close_database();
+    }
 
-	}
-	function edit(){
-		$mysql=$this->connect();
-		$query = mysql_query("update buku set judulBuku='".$this->getJudul()."',noISBN='".$this->getNoISBN()."',penulis='".$this->getPenulis()."',penerbit='".$this->getPenerbit()."',tahunTerbit='".$this->getTahunTerbit()."',stok='".$this->getStok()."',hargaPokok='".$this->getHargaPokok()."',hargaJual='".$this->getHargaJual()."',PPN='".$this->getPPN()."',diskon='".$this->getDiskon()."' where idBuku='".$this->getId()."'");
-		if($query){
-			echo "<script>alert('Data berhasil di update'); window.location.replace('../buku.php');</script>";
-		}else{
-			echo "<script>alert('Data gagal di update'); window.location.replace('../buku.php');</script>";
-		}
+    /**
+     * @inheritDoc
+     */
+    public function insert()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("insert into buku(judulBuku,noISBN,penulis,penerbit,tahunTerbit,stok,hargaPokok,hargaJual,PPN,diskon) values('" . $this->judul . "','" . $this->noISBN . "','" . $this->penulis . "','" . $this->penerbit . "','" . $this->tahunTerbit . "','" . $this->stok . "','" . $this->hargaPokok . "','" . $this->hargaJual . "','" . $this->PPN . "','" . $this->diskon . "')");
+        if ( ! $koneksi->mysqli()->errno) {
+            echo "<script>alert('Data berhasil di tambahkan'); window.location.replace('../buku.php');</script>";
+        } else {
+            echo "<script>alert('Data gagal di tambahkan'); window.location.replace('../buku.php');</script>";
+        }
+    }
 
-	}
-	function data($id){
-		$mysql=$this->connect();
-		$query=mysql_query("select * from buku where idBuku=".$id);
-		$data=mysql_fetch_assoc($query);
-		$this->setId($id);
-		$this->setJudul($data['judulBuku']);
-		$this->setNoISBN($data['noISBN']);
-		$this->setPenulis($data['penulis']);
-		$this->setPenerbit($data['penerbit']);
-		$this->setTahunTerbit($data['tahunTerbit']);
-		$this->setStok($data['stok']);
-		$this->setHargaPokok($data['hargaPokok']);
-		$this->setHargaJual($data['hargaJual']);
-		$this->setPPN($data['PPN']);
-		$this->setDiskon($data['diskon']);
-	}
-	function delete(){
-		$mysql=$this->connect();
-		$query = mysql_query("delete from buku where idBuku='".$this->getId()."'");
-		if($query){
-			echo "<script>alert('Data berhasil di hapus'); window.location.replace('../buku.php');</script>";
-		}else{
-			echo "<script>alert('Data gagal di hapus'); window.location.replace('../buku.php');</script>";
-		}
-
-	}
-
-
+    /**
+     * @inheritDoc
+     */
+    public function update()
+    {
+        $koneksi = $this->connection();
+        $koneksi->query("update buku set judulBuku='" . $this->judul . "',noISBN='" . $this->noISBN . "',penulis='" . $this->penulis . "',penerbit='" . $this->penerbit . "',tahunTerbit='" . $this->tahunTerbit . "',stok='" . $this->stok . "',hargaPokok='" . $this->hargaPokok . "',hargaJual='" . $this->hargaJual . "',PPN='" . $this->PPN . "',diskon='" . $this->diskon . "' where idBuku='" . $this->id . "'");
+        if ( ! $koneksi->mysqli()->errno) {
+            echo "<script>alert('Data berhasil di update'); window.location.replace('../buku.php');</script>";
+        } else {
+            echo "<script>alert('Data gagal di update'); window.location.replace('../buku.php');</script>";
+        }
+        $koneksi->close_database();
+    }
 }
+
 ?>

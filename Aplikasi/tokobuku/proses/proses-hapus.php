@@ -25,8 +25,8 @@ if (isset($_GET['type'])) {
     } elseif ($_GET['type'] == 3) {
         if ($level == 'admin') {
             include "Buku.php";
-            $Buku = new Buku;
-            $Buku->setId($_GET['id']);
+            $Buku     = new \APP\Buku();
+            $Buku->id = $_GET['id'];
             $Buku->delete();
         } else {
             header('location:index.php');

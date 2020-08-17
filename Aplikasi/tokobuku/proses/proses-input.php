@@ -36,17 +36,17 @@ if (isset($_POST['type'])) {
     } elseif ($_POST['type'] == 3) {
         if ($level == 'admin') {
             include "Buku.php";
-            $Buku = new Buku;
-            $Buku->setJudul($_POST['judulBuku']);
-            $Buku->setNoISBN($_POST['noISBN']);
-            $Buku->setPenulis($_POST['penulis']);
-            $Buku->setPenerbit($_POST['penerbit']);
-            $Buku->setTahunTerbit($_POST['tahunTerbit']);
-            $Buku->setStok($_POST['stok']);
-            $Buku->setHargaPokok($_POST['hargaPokok']);
-            $Buku->setHargaJual($_POST['hargaJual']);
-            $Buku->setPPN($_POST['PPN']);
-            $Buku->setDiskon($_POST['diskon']);
+            $Buku              = new \APP\Buku();
+            $Buku->judul       = $_POST['judulBuku'];
+            $Buku->noISBN      = $_POST['noISBN'];
+            $Buku->penulis     = $_POST['penulis'];
+            $Buku->penerbit    = $_POST['penerbit'];
+            $Buku->tahunTerbit = $_POST['tahunTerbit'];
+            $Buku->stok        = $_POST['stok'];
+            $Buku->hargaPokok  = $_POST['hargaPokok'];
+            $Buku->hargaJual   = $_POST['hargaJual'];
+            $Buku->PPN         = $_POST['PPN'];
+            $Buku->diskon      = $_POST['diskon'];
             $Buku->input();
         } else {
             header('location:index.php');
