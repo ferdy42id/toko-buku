@@ -78,6 +78,12 @@ if (isset($_SESSION['level'])) {
             <div class="dropdown">
                 <a href="laporan.php" class="dropbtn">Laporan</a>
             </div>
+            <div class="dropdown">
+                <a href="hotel.php" class="dropbtn">Form Master Hotel</a>
+                <div class="dropdown-content">
+                    <a href="hotel.php?action=input">Input</a>
+                </div>
+            </div>
             <?php
         } else {
             ?>
@@ -96,6 +102,12 @@ if (isset($_SESSION['level'])) {
             </div>
             <div class="dropdown">
                 <a href="laporan.php" class="dropbtn">Laporan</a>
+            </div>
+            <div class="dropdown">
+                <a href="hotel.php" class="dropbtn">Form Master Hotel</a>
+                <div class="dropdown-content">
+                    <a href="hotel.php?action=input">Input</a>
+                </div>
             </div>
         <?php } ?>
     </div>
