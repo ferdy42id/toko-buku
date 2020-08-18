@@ -84,6 +84,12 @@ if ($level != 'admin') {
             <div class="dropdown">
                 <a href="laporan.php" class="dropbtn">Laporan</a>
             </div>
+            <div class="dropdown">
+                <a href="hotel.php" class="dropbtn">Form Master Hotel</a>
+                <div class="dropdown-content">
+                    <a href="hotel.php?action=input">Input</a>
+                </div>
+            </div>
             <?php
         } else {
             ?>
@@ -102,6 +108,12 @@ if ($level != 'admin') {
             </div>
             <div class="dropdown">
                 <a href="laporan.php" class="dropbtn">Laporan</a>
+            </div>
+            <div class="dropdown">
+                <a href="hotel.php" class="dropbtn">Form Master Hotel</a>
+                <div class="dropdown-content">
+                    <a href="hotel.php?action=input">Input</a>
+                </div>
             </div>
         <?php } ?>
     </div>

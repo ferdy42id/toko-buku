@@ -1,23 +1,20 @@
 <?php
 
-use APP\Kasir;
+use APP\Hotel;
 
 session_start();
-if ( ! isset($_SESSION['username'])) {
-    header('location:login.php');
+if ( ! isset( $_SESSION['username'] ) ) {
+	header( 'location:login.php' );
 }
 $level = '';
-if (isset($_SESSION['level'])) {
-    $level = $_SESSION['level'];
-}
-if ($level != 'admin') {
-    header("location:index.php");
+if ( isset( $_SESSION['level'] ) ) {
+	$level = $_SESSION['level'];
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kasir</title>
+    <title>Hotel</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -45,9 +42,9 @@ if ($level != 'admin') {
     </nav>
     <div class="sidebar">
         <a href="#" class="btnclose">X</a>
-        <?php
-        if ($level == 'admin') {
-            ?>
+		<?php
+		if ( $level == 'admin' ) {
+			?>
             <div class="dropdown">
                 <a href="index.php" class="active">Home</a>
             </div>
@@ -90,9 +87,9 @@ if ($level != 'admin') {
                     <a href="hotel.php?action=input">Input</a>
                 </div>
             </div>
-            <?php
-        } else {
-            ?>
+			<?php
+		} else {
+			?>
             <div class="dropdown">
                 <a href="index.php" class="active">Home</a>
             </div>
@@ -115,129 +112,116 @@ if ($level != 'admin') {
                     <a href="hotel.php?action=input">Input</a>
                 </div>
             </div>
-        <?php } ?>
+		<?php } ?>
     </div>
     <div class="content-wrap">
         <div class="content">
-            <?php
-            if (isset($_GET['action'])) {
-                if ($_GET['action'] == 'input') {
-                    echo "
-							<h1>Input Kasir</h1>
+			<?php
+			if ( isset( $_GET['action'] ) ) {
+				if ( $_GET['action'] == 'input' ) {
+					echo "
+							<h1>Form Master Hotel</h1>
 							<hr>
 							<form action=\"proses/proses-input.php\" method=\"post\">
 							<div class=\"form-group\">
-							<label>Nama Kasir</label>
-							<input type=\"text\" name=\"namaKasir\" required>
+							<label>Nama Hotel</label>
+							<input type=\"text\" name=\"namaHotel\" required>
+							</div>
+							<div class=\"form-group\">
+							<label>Nama Manager</label>
+							<input type=\"text\" name=\"namaManager\" required>
 							</div>
 							<div class=\"form-group\">
 							<label>Alamat</label>
 							<input type=\"text\" name=\"alamat\" required>
 							</div>
 							<div class=\"form-group\">
-							<label>Telpon</label>
-							<input type=\"text\" name=\"telp\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
+							<label>Nomor Telepon</label>
+							<input type=\"text\" name=\"telepon\" required>
 							</div>
 							<div class=\"form-group\">
-							<label>Username</label>
-							<input type=\"text\" name=\"username\" required>
+							<label>Jumlah Kamar</label>
+							<input type=\"text\" name=\"jumlahKamar\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 							</div>
 							<div class=\"form-group\">
-							<label>Status</label>
-							<select name=\"status\">
-							<option value=\"1\">Aktif</option>
-							<option value=\"0\">Tidak Aktif</option>
-							</select>
-							</div>
-							<div class=\"form-group\">
-							<label>Level</label>
-							<select name=\"level\">
-							<option value=\"admin\">Admin</option>
-							<option value=\"staff\">Staff</option>
-							</select>
+							<label>Tanggal Mulai Beroprasi</label>
+							<input type=\"text\" name=\"tanggalOprasi\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 							</div>
 							<div class=\"form-group\">
 							<input type=\"submit\" name=\"submit\">
-							<input type=\"hidden\" name=\"type\" value=\"2\">
+							<input type=\"hidden\" name=\"type\" value=\"7\">
 							</div>
 							</form>";
-                } elseif ($_GET['action'] == 'edit') {
-                    if ( ! isset($_GET['id'])) {
-                        header('location:kasir.php');
-                    } else {
-                        include "proses/Kasir.php";
-                        $Kasir = new Kasir();
-                        $Kasir->data($_GET['id']);
-                        echo "
-								<h1>Edit Kasir</h1>
+				} elseif ( $_GET['action'] == 'edit' ) {
+					if ( ! isset( $_GET['id'] ) ) {
+						header( 'location:hotel.php' );
+					} else {
+						include "proses/Hotel.php";
+						$Hotel = new Hotel();
+						$Hotel->data( $_GET['id'] );
+						echo '
+								<h1>Edit Buku</h1>
 								<hr>
-								<form action=\"proses/proses-edit.php?id=" . $_GET['id'] . "\" method=\"post\">
-								<div class=\"form-group\">
-								<label>Nama Distributor</label>
-								<input type=\"text\" name=\"namaKasir\" value=\"" . $Kasir->nama . "\" required>
+								<form action="proses/proses-edit.php?id=' . $_GET['id'] . '" method="post">
+								<div class="form-group">
+								<label>Nama Hotel</label>
+								<input type="text" name="namaHotel" value="' . $Hotel->namaHotel . '" required>
+								</div>
+								<div class="form-group">
+								<label>Nama Manager</label>
+								<input type="text" name="namaManager" value="' . $Hotel->namaManager . '" required>
+								</div>
+								<div class="form-group">
+								<label>alamat</label>
+								<input type="text" name="alamat" value="' . $Hotel->alamat . '"required>
+								</div>
+								<div class="form-group">
+								<label>Nomor Telepon</label>
+								<input type="text" name="telepon" value="' . $Hotel->telepon . '" required>
+								</div>
+								<div class="form-group">
+								<label>Jumlah Kamar</label>
+								<input type="text" name="jumlahKamar" value="' . $Hotel->jumlahKamar . "\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 								</div>
 								<div class=\"form-group\">
-								<label>Alamat</label>
-								<input type=\"text\" name=\"alamat\" value=\"" . $Kasir->alamat . "\" required>
-								</div>
-								<div class=\"form-group\">
-								<label>Telpon</label>
-								<input type=\"number\" name=\"telp\" value=\"" . $Kasir->telepon . "\" required>
-								</div>
-								<div class=\"form-group\">
-								<label>Username</label>
-								<input type=\"text\" name=\"username\" value=\"" . $Kasir->username . "\" required>
-								</div>
-								<div class=\"form-group\">
-								<label>Password</label>
-								<input type=\"password\" name=\"password\" value=\"" . $Kasir->password . "\" required>
-								</div>
-								<div class=\"form-group\">
-								<label>Status</label>
-								<select name=\"status\">
-								<option value=\"1\" " . ($Kasir->status == "1" ? "selected" : "") . ">Aktif</option>
-								<option value=\"0\" " . ($Kasir->status == "0" ? "selected" : "") . ">Tidak Aktif</option>
-								</select>
-								</div>
-								<div class=\"form-group\">
-								<label>Level</label>
-								<select name=\"level\">
-								<option value=\"admin\" " . ($Kasir->level == "admin" ? "selected" : "") . ">Admin</option>
-								<option value=\"staff\" " . ($Kasir->level == "staff" ? "selected" : "") . ">staff</option>
-								</select>
+								<label>Tanggal Mulai Beroprasi</label>
+								<input type=\"text\" name=\"tanggalOprasi\" value=\"" . $Hotel->tanggalOprasi . "\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 								</div>
 								<div class=\"form-group\">
 								<input type=\"submit\" name=\"submit\">
-								<input type=\"hidden\" name=\"type\" value=\"2\">
+								<input type=\"hidden\" name=\"type\" value=\"8\">
 								</div>
 								</form>";
-                    }
-                }
-            } else {
-                include "proses/Kasir.php";
-                $Kasir = new Kasir();
-                echo "
-						<h1>Kasir</h1>
+					}
+				}
+			} else {
+				include "proses/Hotel.php";
+				$Hotel = new Hotel();
+				echo '
+						<h1>Hotel</h1>
 						<hr>
 						<table>
 						<thead>
 						<tr>
-						<th>ID</th>
-						<th>Nama</th>
+						<th>Nomor</th>
+						<th>Nama Hotel</th>
+						<th>Nama Manager</th>
 						<th>Alamat</th>
-						<th>Telp</th>
-						<th>Level</th>	
-						<th>Username</th>
-						<th>Status</th>
-						<th>Action</th>
+						<th>Telepon</th>
+						<th>Jumlah Kamar</th>
+						<th>Tanggal Beroprasi</th>';
+				if ( $level == 'admin' ) {
+					echo '<th>Action</th>';
+				}
+				echo "
 						</tr>
 						</thead>
 						<tbody>";
-                echo $Kasir->select();
-                echo "</tbody>
+				echo $Hotel->select();
+				echo "</tbody>
 						</table>";
-            }
-            ?>
+			}
+			?>
         </div>
     </div>
     <div style="clear:both;"></div>
