@@ -6,6 +6,7 @@ use APP\Kasir;
 use APP\Pasok;
 
 session_start();
+$level = '';
 if (isset($_SESSION['level'])) {
     $level = $_SESSION['level'];
 }

@@ -7,6 +7,7 @@ use APP\Pasok;
 use APP\Penjualan;
 
 session_start();
+$level = '';
 if (isset($_SESSION['level'])) {
     $level = $_SESSION['level'];
 }

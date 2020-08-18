@@ -3,6 +3,7 @@ session_start();
 if ( ! isset($_SESSION['username'])) {
     header('location:login.php');
 }
+$level = '';
 if (isset($_SESSION['level'])) {
     $level = $_SESSION['level'];
 }
