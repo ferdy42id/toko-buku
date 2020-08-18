@@ -58,7 +58,7 @@ class Hotel extends AbstractQuery {
 	 */
 	public function update() {
 		$koneksi = $this->connection();
-		$koneksi->query( "update hotel set namaHotel='" . $this->namaHotel . "', namaManager='" . $this->namaManager . "',alamat='" . $this->alamat . "',jumlahKamar='" . $this->jumlahKamar . "',tanggalOprasi='" . $this->tanggalOprasi . "' where idHotel='" . $this->id . "'" );
+		$koneksi->query( "update hotel set namaHotel='" . $this->namaHotel . "', namaManager='" . $this->namaManager . "',alamat='" . $this->alamat . "',telepon='" . $this->telepon . "',jumlahKamar='" . $this->jumlahKamar . "',tanggalOprasi='" . $this->tanggalOprasi . "' where idHotel='" . $this->id . "'" );
 		if ( ! $koneksi->mysqli()->errno ) {
 			echo "<script>alert('Data berhasil di update'); window.location.replace('../hotel.php');</script>";
 		}

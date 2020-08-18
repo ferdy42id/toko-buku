@@ -91,7 +91,7 @@ if (isset($_POST['type'])) {
             $Hotel->namaHotel     = $_POST['namaHotel'];
             $Hotel->namaManager     = $_POST['namaManager'];
             $Hotel->alamat   = $_POST['alamat'];
-            $Hotel->telepon  = $_POST['telp'];
+            $Hotel->telepon  = $_POST['telepon'];
             $Hotel->jumlahKamar = ($_POST['jumlahKamar']);
             $Hotel->tanggalOprasi    = $_POST['tanggalOprasi'];
             $Hotel->insert();

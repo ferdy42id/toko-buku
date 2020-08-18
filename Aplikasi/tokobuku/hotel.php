@@ -16,6 +16,11 @@ if ( isset( $_SESSION['level'] ) ) {
 <head>
     <title>Hotel</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap/bootstrap-datepicker.min.css">
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -137,16 +142,21 @@ if ( isset( $_SESSION['level'] ) ) {
 							</div>
 							<div class=\"form-group\">
 							<label>Nomor Telepon</label>
-							<input type=\"text\" name=\"telepon\" required>
+							<input type=\"text\" name=\"telepon\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 							</div>
 							<div class=\"form-group\">
 							<label>Jumlah Kamar</label>
 							<input type=\"text\" name=\"jumlahKamar\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 							</div>
 							<div class=\"form-group\">
-							<label>Tanggal Mulai Beroprasi</label>
-							<input type=\"text\" name=\"tanggalOprasi\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
-							</div>
+							    <label>Tanggal Mulai Beroprasi</label>
+							    <div class=\"input-group date\">
+							        <div class=\"input-group-addon\">
+							            <span class=\"glyphicon glyphicon-th\"></span>
+                                   </div>
+                                   <input placeholder=\"masukkan tanggal oprasi\" type=\"text\" class=\"form-control datepicker\" name=\"tanggalOprasi\">
+                                </div>
+                            </div>
 							<div class=\"form-group\">
 							<input type=\"submit\" name=\"submit\">
 							<input type=\"hidden\" name=\"type\" value=\"7\">
@@ -160,7 +170,7 @@ if ( isset( $_SESSION['level'] ) ) {
 						$Hotel = new Hotel();
 						$Hotel->data( $_GET['id'] );
 						echo '
-								<h1>Edit Buku</h1>
+								<h1>Edit Form Master Hotel</h1>
 								<hr>
 								<form action="proses/proses-edit.php?id=' . $_GET['id'] . '" method="post">
 								<div class="form-group">
@@ -177,16 +187,21 @@ if ( isset( $_SESSION['level'] ) ) {
 								</div>
 								<div class="form-group">
 								<label>Nomor Telepon</label>
-								<input type="text" name="telepon" value="' . $Hotel->telepon . '" required>
+								<input type="text" name="telepon" value="' . $Hotel->telepon . '" onkeypress=\'return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0\' required>
 								</div>
 								<div class="form-group">
 								<label>Jumlah Kamar</label>
 								<input type="text" name="jumlahKamar" value="' . $Hotel->jumlahKamar . "\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
 								</div>
-								<div class=\"form-group\">
-								<label>Tanggal Mulai Beroprasi</label>
-								<input type=\"text\" name=\"tanggalOprasi\" value=\"" . $Hotel->tanggalOprasi . "\" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' required>
-								</div>
+								<div class=\"form - group\">
+							    <label>Tanggal Mulai Beroprasi</label>
+							    <div class=\"input - group date\">
+							        <div class=\"input - group - addon\">
+							            <span class=\"glyphicon glyphicon - th\"></span>
+                                   </div>
+                                   <input placeholder=\"masukkan tanggal oprasi\" value=\"$Hotel->tanggalOprasi\" type=\"text\" class=\"form - control datepicker\" name=\"tanggalOprasi\">
+                                </div>
+                            </div>
 								<div class=\"form-group\">
 								<input type=\"submit\" name=\"submit\">
 								<input type=\"hidden\" name=\"type\" value=\"8\">
@@ -226,5 +241,15 @@ if ( isset( $_SESSION['level'] ) ) {
     </div>
     <div style="clear:both;"></div>
 </div>
+<script type="text/javascript">
+    (function ($) {
+        console.log('hit')
+        $(".datepicker").datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+        });
+    })(jQuery);
+</script>
 </body>
 </html>

@@ -1,22 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.9.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 24, 2018 at 09:32 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 5.6.32
+-- Host: localhost:3306
+-- Generation Time: Aug 18, 2020 at 02:10 PM
+-- Server version: 5.7.26
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `dbtokobuku`
@@ -69,6 +61,29 @@ CREATE TABLE `distributor` (
 
 INSERT INTO `distributor` (`idDistributor`, `namaDistributor`, `alamat`, `telepon`) VALUES
 (2, 'Matahari Dunia', 'Jl. Angkasa', '08108108121');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hotel`
+--
+
+CREATE TABLE `hotel` (
+  `idHotel` int(10) NOT NULL,
+  `namaHotel` varchar(200) NOT NULL,
+  `namaManager` varchar(200) NOT NULL,
+  `alamat` text NOT NULL,
+  `telepon` varchar(15) NOT NULL,
+  `jumlahKamar` int(30) NOT NULL,
+  `tanggalOprasi` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hotel`
+--
+
+INSERT INTO `hotel` (`idHotel`, `namaHotel`, `namaManager`, `alamat`, `telepon`, `jumlahKamar`, `tanggalOprasi`) VALUES
+(1, 'Quest Hotel San Denpasar Bali', 'Quest Santoso', 'Kota Denpasar, Bali, Indonesia', '08108108177', 6, '2020-01-03');
 
 -- --------------------------------------------------------
 
@@ -186,6 +201,12 @@ ALTER TABLE `distributor`
   ADD PRIMARY KEY (`idDistributor`);
 
 --
+-- Indexes for table `hotel`
+--
+ALTER TABLE `hotel`
+  ADD PRIMARY KEY (`idHotel`);
+
+--
 -- Indexes for table `kasir`
 --
 ALTER TABLE `kasir`
@@ -224,6 +245,12 @@ ALTER TABLE `distributor`
   MODIFY `idDistributor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `hotel`
+--
+ALTER TABLE `hotel`
+  MODIFY `idHotel` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `kasir`
 --
 ALTER TABLE `kasir`
@@ -256,10 +283,5 @@ ALTER TABLE `pasok`
 -- Constraints for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`idKasir`) REFERENCES `kasir` (`idkasir`),
+  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`idKasir`) REFERENCES `kasir` (`idKasir`),
   ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`idBuku`) REFERENCES `buku` (`idBuku`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
