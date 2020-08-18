@@ -4,6 +4,7 @@ use APP\Buku;
 use APP\Distributor;
 use APP\Kasir;
 use APP\Pasok;
+use APP\Hotel;
 
 session_start();
 $level = '';
@@ -109,4 +110,14 @@ if (isset($_POST['type'])) {
             header('location:index.php');
         }
     }
+	if ($_GET['type'] == 8) {
+		if ($level == 'admin') {
+			include "Hotel.php";
+			$Hotel         = new Hotel();
+			$Hotel->id     = $_GET['id'];
+			$Hotel->update();
+		} else {
+			header('location:index.php');
+		}
+	}
 }

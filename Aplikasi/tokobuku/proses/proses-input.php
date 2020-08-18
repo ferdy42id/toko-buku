@@ -5,6 +5,7 @@ use APP\Distributor;
 use APP\Kasir;
 use APP\Pasok;
 use APP\Penjualan;
+use APP\Hotel;
 
 session_start();
 $level = '';
@@ -83,6 +84,20 @@ if (isset($_POST['type'])) {
         include "Buku.php";
         $Buku = new Buku;
         $Buku->search($_POST['search']);
+    } elseif ($_POST['type'] == 7) {
+        if ($level == 'admin') {
+            include "Hotel.php";
+            $Hotel           = new Hotel();
+            $Hotel->namaHotel     = $_POST['namaHotel'];
+            $Hotel->namaManager     = $_POST['namaManager'];
+            $Hotel->alamat   = $_POST['alamat'];
+            $Hotel->telepon  = $_POST['telp'];
+            $Hotel->jumlahKamar = ($_POST['jumlahKamar']);
+            $Hotel->tanggalOprasi    = $_POST['tanggalOprasi'];
+            $Hotel->insert();
+        } else {
+            header('location:index.php');
+        }
     }
 }
 ?>
